@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+@{Html.RenderPartial("HomeLeft");}
+</div>
+<div>
+@{Html.RenderAction("HomeRight");}
+</div>
+

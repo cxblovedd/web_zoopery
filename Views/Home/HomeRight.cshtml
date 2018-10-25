@@ -1,0 +1,52 @@
+﻿@using Zoopery.Models;
+@{
+    Layout = null;
+}
+
+<script type="text/javascript">
+    $(function () {
+        showMessage("home");
+        $("#myfont").css("color", "#a6c3e0");
+    })
+</script>
+
+<form id="regForm" method="post" action="">
+    <!--首页内容开始-->
+    <div id="maincon">
+        <dl>
+    	    <dt>动物实验管理系统</dt> 
+    	    <dd style="padding:10px;">
+               <div class="fl" style="float:left">
+	    	     <div class="selector">
+		            <table style="margin-right:40px;">
+		        	    <caption  style=" color:Red"><strong>经费不足提醒</strong></caption>
+		        	    <thead>
+		            	    <tr>
+		                	    <th style=" width:100px">课题名称</th>
+                                <th style=" width:100px">课题代码</th>
+                                <th style=" width:100px">总经费（元）</th>
+                                <th style=" width:100px">已花经费（元）</th>
+		                	    <th style=" width:100px">剩余经费（元）</th>
+		            	    </tr>        		
+		        	    </thead>
+		        	    <tbody>
+		              	     @foreach (SubjectModels sub in ViewBag.subjectremain)
+                             {
+		            	        <tr>
+                                    <td>@sub.SubjectName</td>
+		                	        <td>@sub.SubjectCode</td>
+                                    <td>@sub.TotalPrePay</td>
+                                    <td>@sub.CostedJE</td>
+                                    <td>@sub.RemainBalance</td>
+		            	        </tr>
+                             }
+		        	    </tbody>
+		            </table>	             
+		         </div>	     
+		       </div>
+
+    	    </dd>
+        </dl>
+    </div>
+    <!--首页内容结束-->
+</form>

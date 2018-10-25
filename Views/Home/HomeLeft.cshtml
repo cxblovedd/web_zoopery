@@ -1,0 +1,177 @@
+﻿@{
+    Layout = null;
+    
+}
+<script type="text/javascript">
+    
+    function op(num, obj) {
+        for (var i = 1; i < document.getElementsByTagName("ul").length; i++) {
+            if (i == num) {
+                if (obj.className == "put") {
+                    obj.className = "open";
+                    document.getElementsByTagName("ul")[num].className = "show";
+                }
+                else if (obj.className == "open") {
+                    obj.className = "put";
+                    document.getElementsByTagName("ul")[num].className = "hide";
+                }
+            }
+        }
+    }
+    function showMessage(myname) {
+
+        jQuery.ajax({
+            url: "/Js/XML/sysMessage.xml",
+            dataType: "xml",
+            success: function (data) {
+                $("#showMessage").html($(data).find(myname).attr("name"));
+            }
+        })
+        //更改病例列表处的相关信息
+        if (myname == "caselist" || myname == "searchlist") {
+            var div_caselist = document.getElementById(myname);
+            div_caselist.style.display = "block";
+        } else if (myname == "datalist") {
+            var div_datalist = document.getElementById(myname);
+            div_datalist.style.display = "block";
+            $("#dataListId").addClass("home");
+        } else if (myname == "systemmgmt") {
+            var div_datalist = document.getElementById(myname);
+            div_datalist.style.display = "block";
+            $("#systemmgmtId").addClass("home");
+        } else if (myname == "doctorlist") {
+            var div_datalist = document.getElementById(myname);
+            div_datalist.style.display = "block";
+            $("#doctorlistId").addClass("home");
+        }
+        else if (myname == "checkstatis") {
+            $("#dataListId").addClass("home");
+        } else if (myname == "checkresult") {
+            $("#dataListId").addClass("home");
+        } else if (myname == "checklist") {
+            $("#dataListId").addClass("home");
+        } else if (myname == "statisticsChain") {
+            $("#statisticsId").addClass("home");
+        } else if (myname == "overview") {
+            $("#statisticsId").addClass("home");
+        } else if (myname == "fOverview") {
+
+            $("#statisticsId").addClass("home");
+        } else if (myname == "gOverview") {
+            $("#statisticsId").addClass("home");
+        }
+    }
+</script>
+
+<div id="sidebar">
+    <!--介绍说明开始-->
+    <dl style="margin-bottom:10px;">
+        <dt>
+        <h2 class="open" onclick="op(1,this)"><a href="javascript:void(0);">介绍说明</a></h2>
+        </dt>
+        <dd>
+            <ul class="show">
+                <li id="showMessage"></li>
+            </ul>
+        </dd>
+    </dl>
+    <!--介绍说明结束-->
+    <!--病例列表图标说明开始-->
+    <dl class="tags_descript" id="caselist" style="display:none">
+        <dt>
+        <h2 class="open" onclick="op(2,this)"><a href="javascript:void(0);">图标说明</a></h2>
+        </dt>
+        <dd>
+            <ul class="show">
+               @* <li style="border-bottom:2px solid #ddd;padding-left:0;font-family:'宋体';color:#333;font-size:13px;">手术种类
+                </li>
+                <li class="coronary">冠状动脉旁路移植术</li>
+                <li class="valve">瓣膜手术</li>
+                <li class="other">其他手术</li>
+                <li style="border-bottom:2px solid #ddd;padding-left:0;font-family:'宋体';color:#333;font-size:13px;">状态
+                </li>
+                <li class="nostart">未开始</li>
+                <li class="write">录入</li>
+                <li class="complate">完成</li>
+                <li class="stop">锁定</li>
+                <li class="dead">死亡</li>*@
+                <li style="border-bottom:2px solid #ddd;padding-left:0;font-family:'宋体';color:#333;font-size:13px;">操作
+                </li>
+                <li class="view" style="padding-left:35px;">查看</li>
+                <li class="edit" style="padding-left:35px;">编辑</li>
+                <li class="delete" style="padding-left:35px;">申请</li>
+            </ul>
+        </dd>
+    </dl>
+    <!--病例列表图标说明结束-->
+    <!--数据导出图标说明开始-->
+    <dl class="tags_descript" id="searchlist" style="display:none">
+        <dt>
+        <h2 class="open" onclick="op(3,this)"><a href="javascript:void(0);">图标说明</a></h2>
+        </dt>
+        <dd>
+            <ul class="show">
+                <li style="border-bottom:2px solid #ddd;padding-left:0;font-family:'宋体';color:#333;font-size:13px;">手术种类
+                </li>
+                <li class="coronary">冠状动脉旁路移植术</li>
+                <li class="valve">瓣膜手术</li>
+                <li class="other">其他手术</li>
+                <li style="border-bottom:2px solid #ddd;padding-left:0;font-family:'宋体';color:#333;font-size:13px;">状态
+                </li>
+                <li class="nostart">未开始</li>
+                <li class="write">录入</li>
+                <li class="complate">完成</li>
+                <li class="stop">锁定</li>
+                <li class="dead">死亡</li>
+            </ul>
+        </dd>
+    </dl>
+    <!--数据导出图标说明结束-->
+    <!--数据核查图标说明开始-->
+    <dl class="tags_descript" id="datalist" style="display:none">
+        <dt>
+        <h2 class="open" onclick="op(4,this)"><a href="javascript:void(0);">图标说明</a></h2>
+        </dt>
+        <dd>
+            <ul class="show">
+                <li style="border-bottom:2px solid #ddd;padding-left:0;font-family:'宋体';color:#333;font-size:13px;">操作
+                </li>
+                <li class="view" style="padding-left:35px;">核查</li>
+                <li class="checked">已核查</li>
+                <li class="uncheck">未核查</li>
+            </ul>
+        </dd>
+    </dl>
+    <!--数据核查图标说明结束-->
+    <!--系统管理图标说明开始-->
+    <dl class="tags_descript" id="systemmgmt" style="display:none">
+        <dt>
+        <h2 class="open" onclick="op(5,this)"><a href="javascript:void(0);">图标说明</a></h2>
+        </dt>
+        <dd>
+            <ul class="show">
+                <li style="border-bottom:2px solid #ddd;padding-left:0;font-family:'宋体';color:#333;font-size:13px;">操作
+                </li>
+                <li class="edit" style="padding-left:35px;">修改</li>
+                <li class="lorry_edit" style="padding-left:35px;">菜单分配</li>
+                <li class="pwd_login" style="padding-left:35px;">登录密码初始化</li>
+                <!-- <li class="pwd_outline" style="padding-left:35px;">上报密码初始化</li> -->
+            </ul>
+        </dd>
+    </dl>
+    <!--系统管理系统管理图标说明结束-->
+    <!--医生列表图标说明开始-->
+    <dl class="tags_descript" id="doctorlist" style="display:none">
+        <dt>
+        <h2 class="open" onclick="op(6,this)"><a href="javascript:void(0);">图标说明</a></h2>
+        </dt>
+        <dd>
+            <ul class="show">
+                <li style="border-bottom:2px solid #ddd;padding-left:0;font-family:'宋体';color:#333;font-size:13px;">操作
+                </li>
+                <li class="edit" style="padding-left:35px;">修改</li>
+            </ul>
+        </dd>
+    </dl>
+    <!--医生列表图标说明结束-->
+</div>

@@ -1,0 +1,72 @@
+﻿@using Zoopery.Models;
+@{
+    Layout = null;
+    int currentPage = ViewBag.currentPage;
+    int pageCount = ViewBag.pageCount; 
+ }
+ 
+<form action=""  id="delCase">
+<table class="mt10">
+<thead>
+	<tr>
+	    <th style="width:5%; text-align: center" ><input type="checkbox" id="CheckedAll"/></th>
+	    <th style="width:15%;text-align: center">所属课题</th>
+	    <th style="width:20%;text-align: center">实验名称</th>
+        <th style="width:20%;text-align: center">实验日期</th>
+	    <th style="width:10%;text-align: center">申请人</th>
+        <th style="width:5%;text-align: center">状态</th>
+	    <th style="width:17%;text-align: center">操作</th>
+	</tr>
+</thead>   
+<tbody>
+@foreach ( ExperimentModels Exp in ViewBag.explist)
+{
+	<tr style="text-align:center" class="sy">
+	    <td><input type="checkbox" name="items"  /></td>
+        <td>@Exp.SubjectName</td>
+	    <td>@Exp.ExpName</td>
+        <td>@Exp.Syrq</td>
+        <td>@Exp.ModifyOpe</td>
+        <td>@Exp.CheckBz</td>
+	    <td>
+            <a  class="mr7" id="" href="@Url.Action("ApplyExp", "ApplyExperiment", new { expid=Exp.ExpId, modifysign = "0", tip = "0" })">
+                          
+                <img src="../../resources/images/view.gif" class="mt5" title="查看" alt="查看"/>
+            </a> 
+            <a  class="mr7" id="" href="@Url.Action("ApplyExp", "ApplyExperiment", new { expid = Exp.ExpId, modifysign = "1", tip = "0" })">
+                <img src="../../resources/images/edit.gif" class="mt5" title="修改" alt="修改"/>
+            </a>  
+	    </td>
+	</tr>
+}
+</tbody>
+</table>
+<div class="mt10">
+        @if (currentPage == 1)
+        {  
+            <input type="button" value="首页" class="mr11 btn5"/>
+            <input type="button" value="上一页" class="mr11 btn5"/>
+        }
+       @if (currentPage != 1)
+         {
+            <input type="button" value="首页" id="" onclick="goToPage(1)" class="btn3 mr11"/>
+            <input type="button" value="上一页" onclick="goToPage('@(currentPage - 1)')" class="btn3 mr11"/>
+         }
+        @if (currentPage < pageCount)
+        {
+    	   <input type="button" class="btn3 mr11" value="下一页" onclick="goToPage('@(currentPage + 1)')"/>
+    	   <input type="button" value="尾页" class="btn3 mr11" onclick="goToPage('@pageCount')"/>
+        }
+        else
+        {
+    	<input type="button" value="下一页" class="mr11 btn5"/>
+    	<input type="button" value="尾页" class="mr11 btn5"/>
+   
+        }
+        当前第<span class="red">@currentPage<input type="hidden" value="@currentPage" id="currentPage"/></span>页&nbsp;&nbsp;
+        共<span class="red">@pageCount</span> 页&nbsp;&nbsp;<input type="hidden" id="totalPage" value="@pageCount"/>
+        跳转至第&nbsp; <input type="text" size="10" id="pageNo" name="pageNo"/>&nbsp;页&nbsp;&nbsp;
+        <input type="button" id="turnpage" value="跳转" class="btn2" onclick="skipToPage(1,'@pageCount')"/>
+    </div>
+</form>
+       

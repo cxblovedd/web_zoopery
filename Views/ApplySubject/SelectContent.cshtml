@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "课题列表";
+}
+<script type="text/javascript">
+    $(function () {
+        showMessage("caselist");
+//        $("#showSubjectList").load("SubjectList");
+    })
+
+    function ApplySubject() {
+        location = "/ApplySubject/Apply";
+    }
+
+    function SearchSubject() {
+        $("#showSubjectList").load("SubjectList?strName=" + $("#bykeyword").val());
+    }
+
+    function goToPage(page) {
+        //地区
+        var searchKeyWord = $("#bykeyword").val();
+        $("#showSubjectList").load("/ApplySubject/SubjectList", {
+            strName: searchKeyWord ,
+            currentPage: page
+        });
+    }
+
+
+    function skipToPage(start, end) {
+
+        var goPage1 = $("#pageNo").val();
+        var goPage = -1;
+        if (goPage1 != "") {
+            var goPage = parseInt(goPage1);
+        }
+        var totalPage = $("#totalPage").val();
+
+        var searchKeyWord = $("#bykeyword").val();
+        if (!isNumber(goPage)) {
+            alert("请输入数字");
+            return false;
+        }
+        if (goPage <= 0) {
+            alert("跳转页数需大于0");
+            return false;
+        } else if (goPage > totalPage) {
+            alert("输入的跳转页数不能超过总页数");
+            return false;
+        }
+
+        if (goPage != null && goPage != "") {
+            if (goPage <= end && goPage >= start) {
+
+              
+                $("#showSubjectList").load("/ApplySubject/SubjectList", {
+                    strName: searchKeyWord,
+                    currentPage: goPage
+                });
+
+            }
+
+        }
+    }
+    //数字验证的js
+    function isNumber(data) {
+        var pattern = /^[0-9]+$/;
+        if (data.length < 1 || !pattern.test(data)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+
+@{Html.RenderPartial("../Home/HomeLeft");}
+
+<div id="maincon"> 
+     <dl>
+       <dt>课题列表</dt>
+       <dd>
+           <div id="chart_tab" style=" height:27px">
+			    <p class="p2">
+				    <a href="javascript:void(0)">精&nbsp;确</a> 
+			    </p>
+                 
+		   </div>
+		   <div id="graphical" class="show">
+	            <table id="tab5">
+	                <tr>
+	                    <td width="160">课题名称(或课题代码)：</td>
+	                    <td class="formfieldM"  style="background-position:0% 50%;" width="200">
+                            <input type="text" id="bykeyword" style="margin-top:1px;"/>
+	                    </td>
+	                    <td>
+	                        <input type="button" value="查询" id="subjectSelect" onclick="SearchSubject()" class="btn6"/>　
+	                    </td>
+                        <td>
+                          <input type="button" value="申请课题" title="申请课题" size="20"  onclick="ApplySubject();" class="btn7" />
+                        </td>
+	                  </tr>
+	               </table>
+            </div>
+          
+            <div id="showSubjectList">
+               @{Html.RenderAction("SubjectList", "ApplySubject");}
+            </div>
+           </dd>
+     </dl>
+</div>

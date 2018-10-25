@@ -1,0 +1,158 @@
+﻿@using Zoopery.Models;
+@{
+    ViewBag.Title = "登录";
+    Layout = "../Shared/_LoginLayout.cshtml";
+}
+    
+     <script type="text/javascript">
+         $(document).ready(function () {
+             if (window.navigator.userAgent.indexOf('MSIE') != -1) {
+                 alert("请使用360浏览器极速模式、IE8及以上版本或其他浏览器，否则会导致显示问题，可能影响填报。");
+             }
+
+             if ($.cookie("userName") !== null) {
+                 $("#user").val($.cookie("userName"));
+             }
+
+             if ('@ViewBag.loginresult' == "false") {
+                 $("#passCh").html("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp用户名或密码错误!");
+             }
+         });
+
+         function login(str) {
+             var result = true;
+
+             if (result) {
+                 document.getElementById(str).click();
+             }
+         }
+    </script>
+
+<div id="login_top"></div>
+<div id="login_mainbody">
+        <div id="login_middle">
+          <form action="" method="post">
+            <fieldset>
+                <table style="border-style: inset;">
+                    <tr>
+                        <td align="right" style="padding-bottom: 12px;padding-top:10px">
+                            <label for="user">用户名：</label>
+                        </td>
+                        <td style="padding-bottom: 12px;padding-top:10px">
+                            <input title="" style="height: 20px;" type="text" id="user" name="loginName"  placeholder="用户名" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="padding-bottom: 12px;">
+                            <label>密码：</label>
+                        </td>
+                        <td style="padding-bottom: 12px;">
+                            <input type="password" id="pwd" name="loginPassword" style="height: 20px;" placeholder="密码" />
+                        </td>
+                      
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <font color="red" id="nameCh"></font><font color="red" id="hosCh"></font><font color="red" id="passCh"></font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" style="padding-bottom: 12px;"></td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td rowspan="2">
+                                        <input type="button" id="login_btn" style="margin-left: 0px;" onclick="login('submit_btn')" />
+                                        <input type="submit" id="submit_btn" style="display: none;" />
+                                        &nbsp;
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                               
+                            </table>
+                        </td>
+                    </tr>
+                    <tr />
+                    <tr />
+                    <tr />
+                    <tr>
+                        <td>
+                            <label style="color: Gray; font-size: small; float: right;"></label>
+                        </td>
+                        <td>
+                            <label style="color: Gray; font-size: small; float: left;">版权所有:阜外医院</label>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+            </form>
+        </div>
+        <div id="login_bottom"></div>
+</div>
+<script type="text/javascript">
+        if (!window.XMLHttpRequest) {
+            window.attachEvent("onload", enableAlphaImages);
+        }
+
+        function enableAlphaImages() {
+            for (var i = 0; i < document.all.length; i++) {
+                var obj = document.all[i];
+                var bg = obj.currentStyle.backgroundImage;
+                var img = document.images[i];
+                if (bg && bg.match(/\.png/i) != null) {
+                    var img = bg.substring(5, bg.length - 2);
+                    var offset = obj.style["background-position"];
+                    obj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + img + "', sizingMethod='crop')";
+                    obj.style.background = "none";
+                } else if (img && img.src.match(/\.png$/i) != null) {
+                    var src = img.src;
+                    img.style.width = img.width + "px";
+                    img.style.height = img.height + "px";
+                    img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + src + "', sizingMethod='crop')"
+                    img.src = "http://s1.95171.cn/b/img/pixel.gif";
+                }
+            }
+        }
+    </script>
+<script type="text/javascript">
+        function beginSelect(elem) {
+            if (elem.className == "btn") {
+                elem.className = "btn btnhover"
+                elem.onmouseup = function () {
+                    this.className = "btn"
+                }
+            }
+            var ul = elem.parentNode.parentNode;
+            var li = ul.getElementsByTagName("li");
+            var selectArea = li[li.length - 1];
+            if (selectArea.style.display == "block") {
+                selectArea.style.display = "none";
+            }
+            else {
+                selectArea.style.display = "block";
+                mouseoverBg(selectArea);
+            }
+        }
+
+        function mouseoverBg(elem1) {
+            var input = elem1.parentNode.getElementsByTagName("input")[0];
+            var p = elem1.getElementsByTagName("p");
+            var pLength = p.length;
+            for (var i = 0; i < pLength; i++) {
+                p[i].onmouseover = showBg;
+                p[i].onmouseout = showBg;
+                p[i].onclick = postText;
+            }
+
+            function showBg() {
+                this.className == "hover" ? this.className = " " : this.className = "hover";
+            }
+
+            function postText() {
+                var selected = this.innerHTML;
+                input.setAttribute("value", selected);
+                elem1.style.display = "none";
+            }
+        } 
+    </script>

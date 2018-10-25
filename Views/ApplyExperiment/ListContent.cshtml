@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "实验列表";
+}
+<script type="text/javascript">
+    $(function () {
+        showMessage("caselist");
+    })
+  
+    function ApplyNewExp() {
+        location = "/ApplyExperiment/ApplyExp";
+    }
+
+//    function SearchExp() {
+//        $("#showExpList").load("ExperimentList?expName=" + $("#bykeyword").val());
+//    }
+
+    function goToPage(page) {
+        //地区
+        var searchKeyWord = $("#bykeyword").val();
+        var expdate = $("#keyworddate").val();
+        var expstatus = $("#keywordstatus").val();
+        $("#showExpList").load("/ApplyExperiment/ExperimentList", {
+            expName: searchKeyWord,
+            expdate: expdate,
+            expstatus:expstatus,
+            currentPage: page
+        });
+    }
+
+
+    function skipToPage(start, end) {
+
+        var goPage1 = $("#pageNo").val();
+        var goPage = -1;
+        if (goPage1 != "") {
+            var goPage = parseInt(goPage1);
+        }
+        var totalPage = $("#totalPage").val();
+
+      
+        if (!isNumber(goPage)) {
+            alert("请输入数字");
+            return false;
+        }
+        if (goPage <= 0) {
+            alert("跳转页数需大于0");
+            return false;
+        } else if (goPage > totalPage) {
+            alert("输入的跳转页数不能超过总页数");
+            return false;
+        }
+        var searchKeyWord = $("#bykeyword").val();
+        var expdate = $("#keyworddate").val();
+        var expstatus = $("#keywordstatus").val();
+        if (goPage != null && goPage != "") {
+            if (goPage <= end && goPage >= start) {
+                $("#showExpList").load("/ApplyExperiment/ExperimentList", {
+                    expName: searchKeyWord,
+                    expdate: expdate,
+                    expstatus: expstatus,
+                    currentPage: goPage
+                });
+            }
+        }
+    }
+    //数字验证的js
+    function isNumber(data) {
+        var pattern = /^[0-9]+$/;
+        if (data.length < 1 || !pattern.test(data)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+
+@{Html.RenderPartial("../Home/HomeLeft");}
+<div id="maincon"> 
+     <dl>
+       <dt>实验列表</dt>
+       <dd>
+          <div id="chart_tab" style=" height:27px">
+			    <p class="p2">
+				    <a href="javascript:void(0)">精&nbsp;确</a> 
+			    </p>
+               
+		   </div>
+		   <div id="graphical" class="show">
+	            <table id="tab5">
+	                <tr>
+	                    <td width="70">实验名称：</td>
+	                    <td class="formfieldM"  style="background-position:0% 50%;" width="200">
+                            <input type="text" id="bykeyword" style="margin-top:1px;"/>
+	                    </td>
+
+                        <td width="70">实验日期：</td>
+	                    <td class="formfieldM"  style="background-position:0% 50%;" width="200">
+                            <input type="text" id="keyworddate" style="margin-top:1px;" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+	                    </td>
+
+                        <td width="50">状态：</td>
+	                    <td  style="background-position:0% 50%;" width="140">
+                             <select  id="keywordstatus" style="height: 20px;width: 100px;" >
+                                       <option value="">请选择</option>
+                                       <option value="0">初审</option>
+                                       <option value="1">复审</option>
+                                       <option value="2">通过</option>
+                             </select>
+	                    </td>
+	                    <td>
+	                        <input type="button" value="查询" id="expSelect" onclick="goToPage(1)" class="btn6"/>　
+	                    </td>
+                       <td>
+                        <input type="button" value="申请实验" title="申请实验" size="20"  onclick="ApplyNewExp();" class="btn7"  />
+                       </td>
+	                  </tr>
+	               </table>
+            </div>
+            <div id="showExpList">
+               @{Html.RenderAction("ExperimentList", "ApplyExperiment");}
+            </div>
+       </dd>
+     </dl>
+</div>
+

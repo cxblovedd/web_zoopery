@@ -1,0 +1,76 @@
+﻿@using Zoopery.Models
+@{
+    Layout = null;
+    LoginModel UserLogin = Session["usermodel"] as LoginModel;
+    
+ }
+<script type="text/javascript">
+        jQuery(function ($) {
+            if (jQuery.browser.msie && (jQuery.browser.version == "6.0") && !jQuery.support.style) {
+                jQuery('dd').hover(function () {
+                    jQuery(this).addClass('hover');
+                }, function () {
+                    jQuery(this).removeClass('hover');
+                });
+            }
+
+            jQuery(".menu1").each(function (index) {
+                jQuery(this).hover(function () {
+                    var leng = jQuery(this).find("dd").length;
+                    if (leng != 0) {
+                        jQuery("#clos" + (index + 1)).show();
+                    }
+                }, function () {
+                    jQuery("#clos" + (index + 1)).hide();
+                })
+            })
+        });
+        function logout() {
+            if (confirm("请确认是否退出？")) {
+                window.location = "/Login/Login";
+            }
+        }
+</script>
+<div id="header">
+    <!-- 顶部开始 -->
+    <div style="margin-bottom: 6px;">
+        <!--网站log开始-->
+        <div id="log">
+            <h1>
+                <a href= "@Url.Action("Login", "Login")" title="动物实验管理系统">动物实验管理系统</a>
+            </h1>
+        </div>
+        <!--网站log结束-->
+        <!-- 欢迎信息开始 -->
+        <div id="tishi">
+            欢迎您，<b>@UserLogin.UserName</b>
+            <a href="#" title="退出"  onclick="logout()">退出</a>
+        </div>
+        <!-- 欢迎信息结束 -->
+        <div class="clear">
+        </div>
+    </div>
+    <!-- 顶部结束 -->
+    <!--顶部导航开始-->
+    <div id="nav">
+        <ul id="nav_box" style="font-family: '微软雅黑';">
+             <li class="menu1"><a class="menu1_a"><span id="">首页</span> </a>
+                <dl class="submenu" id="clos1"><dd>@Html.ActionLink("首页", "HomePage", "Home", null, null)</dd></dl>
+            </li>
+            <li class="menu1"><a class="menu1_a"><span id="">课题</span> </a>
+                <dl class="submenu" id="clos2">
+                  <dd>@Html.ActionLink("课题列表", "SelectContent", "ApplySubject", null, null)</dd>
+               @*   <dd>@Html.ActionLink("课题申请", "Apply", "ApplySubject", null, null)</dd>*@
+                </dl>
+
+            </li>
+            <li class="menu1"><a class="menu1_a"><span id="">实验</span> </a>
+                <dl class="submenu" id="clos3">
+                  <dd>@Html.ActionLink("实验列表", "ListContent", "ApplyExperiment", null, null)</dd>
+                  @*<dd>@Html.ActionLink("实验申请", "ApplyExp", "ApplyExperiment", null, null)</dd>*@
+                </dl>
+
+            </li>
+        </ul>
+    </div>
+</div>
